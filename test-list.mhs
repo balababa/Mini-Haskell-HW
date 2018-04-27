@@ -1,0 +1,5 @@
+let a = 1:2:3:[] in
+  let b = True:[] in
+    if head b 
+     then (head a, Fasle)
+     else \x -> tail a + x  
