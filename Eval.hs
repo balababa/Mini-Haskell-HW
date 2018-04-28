@@ -54,7 +54,7 @@ ev1 env (If e1 e2 e3) =
     S (VB c)  -> if c then ev1 env e2 else ev1 env e3
     S _       -> Error "'if' condition not a boolean"
     Error err -> Error err
-ev1 env (Lam xs e) = Error "Lambda not implemented, your assignment 5"
+ev1 env (Lam xs e) = S (VLam xs e env)
 ev1 env (App e1 e2) =
   case (ev1 env e1) of
     Error err -> Error err
@@ -65,8 +65,11 @@ ev1 env (Let [x] e be) =
   case (ev1 env e) of
     Error err -> Error err
     S v       -> ev1 (updEnv x v env) be
-ev1 env (Tuple es) = Error "Tuples not implemented, your assignment 5"
-                     --Hint: case mapError (ev1 env) es of ...
+ev1 env (Tuple es) =
+  case mapError (ev1 env) es of
+    S xs -> S (VTuple xs)
+    
+                   --Hint: case mapError (ev1 env) es of ...
 
 -----operator applications----------------------------------------------
 appVals :: Val -> Val -> Error Val
@@ -79,8 +82,8 @@ appVals v1 v2 = Error $ (show v1)
 appOp :: Oper -> Val -> Error Val
 appOp Not  (VB b)         = S $ VB $ not b
 appOp Not  _              = Error "not applied to non-boolean"
-appOp Head (VList (v:vs)) = Error "Lists not implemented, your assignment 5"
-appOp Tail (VList (v:vs)) = Error "Lists not implemented, your assignment 5"
+appOp Head (VList (v:vs)) = S $ v
+appOp Tail (VList (v:vs)) = S $ (VList vs)
 appOp op v2               = S $ Partial op v2
 
 appBinOp :: Oper -> Val -> Val -> Error Val

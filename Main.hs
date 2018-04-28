@@ -26,11 +26,11 @@ parseEval fname =
                 S v -> putStrLn $ show v
      }
 
---main = do
---  parseEval "test-funarg.mhs"
---  parseEval "test-hof.mhs"
---  parseEval "test-if.mhs"
---  parseEval "test-lambda.mhs"
---  parseEval "test-let.mhs"
---  parseEval "test-list.mhs"
---  parseEval "test-tuple.mhs"
+main = do
+ parseEval "test-funarg.mhs"
+ parseEval "test-hof.mhs"
+ parseEval "test-if.mhs"
+ parseEval "test-lambda.mhs"
+ parseEval "test-let.mhs"
+ parseEval "test-list.mhs"
+ parseEval "test-tuple.mhs"
