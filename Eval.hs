@@ -92,8 +92,8 @@ appBinOp Times (VN n) (VN n') = S $ VN (n * n')
 appBinOp Equal (VN n) (VN n') = S $ VB (n == n')
 appBinOp And   (VB b) (VB b') = S $ VB (b && b')
 appBinOp Or    (VB b) (VB b') = S $ VB (b || b')
-appBinOp Cons  v      (VList vs) = Error " Lists implemented, your assignment 5"
-appBinOp Cons  v      VNil    = Error "Lists not implemented, your assignment 5"
+appBinOp Cons  v      (VList vs) = S $ (VList (v:vs))
+appBinOp Cons  v      VNil    = S $ (VList [v])
 appBinOp op v v' =
   Error $ "binary operator " ++ show op
            ++ "not defined on arguments "
