@@ -83,7 +83,7 @@ appOp :: Oper -> Val -> Error Val
 appOp Not  (VB b)         = S $ VB $ not b
 appOp Not  _              = Error "not applied to non-boolean"
 appOp Head (VList (v:vs)) = S $ v
-appOp Tail (VList (v:vs)) = S $ (VList vs)
+appOp Tail (VList (v:vs)) = S $ VList vs
 appOp op v2               = S $ Partial op v2
 
 appBinOp :: Oper -> Val -> Val -> Error Val
@@ -92,8 +92,8 @@ appBinOp Times (VN n) (VN n') = S $ VN (n * n')
 appBinOp Equal (VN n) (VN n') = S $ VB (n == n')
 appBinOp And   (VB b) (VB b') = S $ VB (b && b')
 appBinOp Or    (VB b) (VB b') = S $ VB (b || b')
-appBinOp Cons  v      (VList vs) = S $ (VList (v:vs))
-appBinOp Cons  v      VNil    = S $ (VList [v])
+appBinOp Cons  v      (VList vs) = S $ VList (v:vs)
+appBinOp Cons  v      VNil    = S $ VList [v]
 appBinOp op v v' =
   Error $ "binary operator " ++ show op
            ++ "not defined on arguments "
